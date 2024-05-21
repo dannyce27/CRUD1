@@ -75,6 +75,22 @@ class Adaptador(private var Datos: List<dataClassMascotas>) : RecyclerView.Adapt
             val dialog = Builder.create()
             dialog.show()
         }
+
+        holder.btnEditar.setOnClickListener{
+            val context = holder.itemView.context
+            val Builder = AlertDialog.Builder(context)
+
+            Builder.setTitle("Editar")
+            Builder.setMessage("¿Desea editar esta mascota?")
+
+            Builder.setPositiveButton("Si"){
+                dialog, switch -> dialog.dismiss()
+            }
+
+            Builder.setNegativeButton("No"){
+                dialog, switch -> dialog.dismiss()
+            }
+        }
     }
 
 
