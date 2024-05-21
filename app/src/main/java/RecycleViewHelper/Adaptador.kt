@@ -3,6 +3,7 @@ package RecyclerViewHelper
 import Daniel.Soriano.crud_daniel_soriano.R
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -14,7 +15,7 @@ import modelo.dataClassMascotas
 
 class Adaptador(private var Datos: List<dataClassMascotas>) : RecyclerView.Adapter<ViewHolder>() {
 
-    fun  actualizarLista(nuevaLista: List<dataClassMascotas>{
+    fun  actualizarLista(nuevaLista: List<dataClassMascotas>){
         Datos = nuevaLista
         //esto es lo que notifica al recycleView que hay nuevos datos agregados a la base de datos
         notifyDataSetChanged()
@@ -32,5 +33,8 @@ class Adaptador(private var Datos: List<dataClassMascotas>) : RecyclerView.Adapt
         val producto = Datos[position]
         holder.textView.text = producto.nombreMascota
     }
+
+
+
 
 }

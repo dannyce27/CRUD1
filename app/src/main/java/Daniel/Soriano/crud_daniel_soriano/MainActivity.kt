@@ -19,6 +19,7 @@ import kotlinx.coroutines.withContext
 import modelo.claseConexion
 import modelo.dataClassMascotas
 
+
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +52,7 @@ class MainActivity : AppCompatActivity() {
 
             //TODO: Creo un statement
             val statement = objConexion?.createStatement()
-            val resultSet = statement?.executeQuery("Select * From tbMascota;")!!
+            val resultSet = statement?.executeQuery("Select * From tbMascota")!!
             val mascotas = mutableListOf<dataClassMascotas>()
 
             //TODO: Recorro todos los registro de datos
@@ -63,13 +64,14 @@ class MainActivity : AppCompatActivity() {
             return mascotas
 
 
-            //TODO: Asignar el adaptador al recyclerView
-            CoroutineScope(Dispatchers.IO).launch {
-                val mascotasDB = obtenerDatos()
-                withContext(Dispatchers.Main){
-                    val adapter = Adaptador(mascotasDB)
-                    rcvMascotas.adapter = adapter
-                }
+
+        }
+        //TODO: Asignar el adaptor al recyclerView
+        CoroutineScope(Dispatchers.IO).launch {
+            val mascotasDB = obtenerDatos()
+            withContext(Dispatchers.Main){
+                val adapter = Adaptador(mascotasDB)
+                rcvMascotas.adapter = adapter
             }
         }
 
@@ -88,10 +90,18 @@ class MainActivity : AppCompatActivity() {
                 addMascota.setInt(3, edad.text.toString().toInt())
                 addMascota.executeUpdate()
 
-
+                val nuevaMascota = obtenerDatos()
+                withContext(Dispatchers.Main){
+                    (rcvMascotas.adapter as? Adaptador)?.actualizarLista(nuevaMascota)
+                }
 
             }
+
         }
+
+
+
+
 
 
 
