@@ -18,6 +18,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import modelo.claseConexion
 import modelo.dataClassMascotas
+import java.util.UUID
 
 
 class MainActivity : AppCompatActivity() {
@@ -57,9 +58,14 @@ class MainActivity : AppCompatActivity() {
 
             //TODO: Recorro todos los registro de datos
             while (resultSet.next()){
+                val uuid = resultSet.getString("uuid")
                 val nombre = resultSet.getString("nombreMascota")
-                val mascota = dataClassMascotas(nombre)
+                val peso  = resultSet.getInt("peso")
+                val edad = resultSet.getInt("edad")
+                val mascota = dataClassMascotas(uuid, nombre, peso, edad)
                 mascotas.add(mascota)
+
+
             }
             return mascotas
 
@@ -84,10 +90,11 @@ class MainActivity : AppCompatActivity() {
                 // Creo un obj de la clase conexion
                 val objConexion  = claseConexion().cadenaConexion()
                 //2
-                val addMascota = objConexion?.prepareStatement("Insert Into tbMascota values(?, ?, ?)")!!
-                addMascota.setString(1, nombre.text.toString() )
-                addMascota.setInt(2, peso.text.toString().toInt())
-                addMascota.setInt(3, edad.text.toString().toInt())
+                val addMascota = objConexion?.prepareStatement("Insert Into tbMascota(uuid, nombreMascota, peso, edad) values(?, ?, ?, ?)")!!
+                addMascota.setString(1, UUID.randomUUID().toString())
+                addMascota.setString(2, nombre.text.toString() )
+                addMascota.setInt(3, peso.text.toString().toInt())
+                addMascota.setInt(4, edad.text.toString().toInt())
                 addMascota.executeUpdate()
 
                 val nuevaMascota = obtenerDatos()
