@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
 
             //TODO: Creo un statement
             val statement = objConexion?.createStatement()
-            val resultSet = statement?.executeQuery("Select * From tbMascota")!!
+            val resultSet = statement?.executeQuery("Select * From tbMascotas")!!
             val mascotas = mutableListOf<dataClassMascotas>()
 
             //TODO: Recorro todos los registro de datos
@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
                 // Creo un obj de la clase conexion
                 val objConexion  = claseConexion().cadenaConexion()
                 //2
-                val addMascota = objConexion?.prepareStatement("Insert Into tbMascota(uuid, nombreMascota, peso, edad) values(?, ?, ?, ?)")!!
+                val addMascota = objConexion?.prepareStatement("Insert Into tbMascotas(uuid, nombreMascota, peso, edad) values(?, ?, ?, ?)")!!
                 addMascota.setString(1, UUID.randomUUID().toString())
                 addMascota.setString(2, nombre.text.toString() )
                 addMascota.setInt(3, peso.text.toString().toInt())
